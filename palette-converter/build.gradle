@@ -1,0 +1,16 @@
+apply plugin: 'java'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'args4j:args4j:2.0.29'
+}
+
+jar {
+  manifest {
+    attributes 'Main-Class': 'io.github.revned77.palettes.PaletteConverter'
+  }
+  from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}

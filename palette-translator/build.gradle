@@ -10,7 +10,7 @@ dependencies {
 
 jar {
   manifest {
-    attributes 'Main-Class': 'io.github.revned77.palettes.PaletteConverter'
+    attributes 'Main-Class': 'io.github.revned77.palettes.PaletteTranslator'
   }
   from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }

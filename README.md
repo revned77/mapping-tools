@@ -3,7 +3,7 @@
 This is a collection of the few reusable tools I've written to help with constructing maps for
 [VGMaps.com](http://vgmaps.com). Probably not particularly helpful to anyone other than me, but nevertheless.
 
-### palette-converter
+### palette-translator
 This tool transforms images based on source and target palette inputs. I've used it to give my NES maps consistent
 palettes, and also for many of the Inverted Castle maps for SotN. It's very rigid by necessity; inputs have to be
 essentially identical and have no ambiguity in color translation.

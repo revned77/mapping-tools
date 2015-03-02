@@ -13,7 +13,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-public class PaletteConverter {
+public class PaletteTranslator {
 
   @Option(name = "-s", usage = "Source file", required = true)
   private String sourceFileName;
@@ -21,7 +21,7 @@ public class PaletteConverter {
   @Option(name = "-t", usage = "Target file", required = true)
   private String targetFileName;
 
-  @Option(name = "-f", usage = "File to convert", required = true)
+  @Option(name = "-f", usage = "File to translate", required = true)
   private String fileName;
 
   @Option(name = "-o", usage = "Output file", required = true)
@@ -57,6 +57,6 @@ public class PaletteConverter {
   }
 
   public static void main(String[] args) throws Exception {
-    new PaletteConverter().realMain(args);
+    new PaletteTranslator().realMain(args);
   }
 }

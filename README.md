@@ -22,5 +22,10 @@ This is a tool I wrote almost 10 years ago and rewrote a couple of times afterwa
 unique tiles and then reassembles them. It's marginally useful for finding mistakes in tile-based maps or for
 making sweeping changes.
 
+### pngopt
+This is script which wraps several PNG optimizers and runs them in parallel across any number of files, keeping
+only the best results. It currently uses pngout, optipng, advpng and pngcrush, and is not particularly robust in
+the face of machine configurations that aren't my own.
+
 ### vgmaps-rss
 Not a mapping tool, but this is a quick-and-dirty scraper I wrote to turn VGMaps news updates into an RSS feed.

@@ -21,3 +21,6 @@ my images ended up rendering very slightly differently).
 This is a tool I wrote almost 10 years ago and rewrote a couple of times afterward. It slices up an image into
 unique tiles and then reassembles them. It's marginally useful for finding mistakes in tile-based maps or for
 making sweeping changes.
+
+### vgmaps-rss
+Not a mapping tool, but this is a quick-and-dirty scraper I wrote to turn VGMaps news updates into an RSS feed.

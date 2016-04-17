@@ -92,6 +92,13 @@ class PngcrushTask(Task):
     return ['pngcrush', '-f', '%d' % self.filter, self.filename, self.result_path]
 
 
+class ZopflipngTask(Task):
+  def name(self):
+    return 'zopflipng'
+  def commandline(self):
+    return ['zopflipng', '-m', self.filename, self.result_path]
+
+
 def get_size(filename):
   return os.path.getsize(filename)
 
@@ -105,7 +112,7 @@ class Optimization(object):
 
     original_size = get_size(self.filename)
     print('Initial size: %d bytes' % original_size)
-    
+
     if sys.platform == 'darwin':
       resource_fork_path = self.filename + '/..namedfork/rsrc'
       resource_fork_size = get_size(resource_fork_path)
@@ -127,6 +134,7 @@ class Optimization(object):
     self.tasks.append(AdvpngTask(self.filename))
     self.tasks.append(OptipngTask(self.filename))
     self.tasks.extend([PngcrushTask(f, self.filename) for f in args.filter])
+    self.tasks.append(ZopflipngTask(self.filename))
     if args.run_tools:
       self.tasks = [t for t in self.tasks if t.name() in args.run_tools]
 
@@ -145,7 +153,7 @@ class Optimization(object):
       else:
         delta = '=='
       summaries.append('%s: %s' % (task.name(), delta))
-    
+
     print(', '.join(summaries))
     if best:
       shutil.move(best.result_path, self.filename)
@@ -166,7 +174,7 @@ def main():
       sys.exit(2)
 
   optimizations = []
-  tasks = []  
+  tasks = []
   for filename in args.filenames:
     optimization = Optimization(filename)
     optimization.prepare()
@@ -177,7 +185,7 @@ def main():
   with ThreadPoolExecutor(max_workers=args.threads) as executor:
     list(executor.map(lambda task: task.execute(), tasks))
   print('')
-  
+
   for optimization in optimizations:
     optimization.finish()
   for task in tasks:

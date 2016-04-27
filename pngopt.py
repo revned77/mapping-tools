@@ -38,9 +38,13 @@ class Task(object):
 
   def execute(self):
     print('Running %s for %s' % (self.name(), self.filename))
-    with open(os.devnull, 'w') as devnull:
-      subprocess.call(self.commandline(), stdout=devnull, stderr=devnull)
-    self.result_size = get_size(self.result_path)
+    try:
+      with open(os.devnull, 'w') as devnull:
+        subprocess.call(self.commandline(), stdout=devnull, stderr=devnull)
+      self.result_size = get_size(self.result_path)
+    except Exception as e:
+      print('%s failed on %s: %s' % (
+          self.name(), self.filename, str(e)))
     self.done = True
 
   def cleanup(self):
@@ -145,14 +149,15 @@ class Optimization(object):
     smallest_size = original_size
     summaries = []
     for task in self.tasks:
-      if task.result_size < smallest_size:
-        smallest_size = task.result_size
-        best = task
-      if task.result_size < original_size:
-        delta = '-%d' % (original_size - task.result_size)
-      else:
-        delta = '=='
-      summaries.append('%s: %s' % (task.name(), delta))
+      if task.result_size:
+        if task.result_size < smallest_size:
+          smallest_size = task.result_size
+          best = task
+        if task.result_size < original_size:
+          delta = '-%d' % (original_size - task.result_size)
+        else:
+          delta = '=='
+        summaries.append('%s: %s' % (task.name(), delta))
 
     print(', '.join(summaries))
     if best:

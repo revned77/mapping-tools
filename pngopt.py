@@ -100,7 +100,7 @@ class ZopflipngTask(Task):
   def name(self):
     return 'zopflipng'
   def commandline(self):
-    return ['zopflipng', '-m', self.filename, self.result_path]
+    return ['zopflipng', '-m', '--filters=0me', '--lossy_8bit', '--lossy_transparent', self.filename, self.result_path]
 
 
 def get_size(filename):
@@ -134,11 +134,11 @@ class Optimization(object):
     print('')
 
     self.tasks = []
+    self.tasks.append(ZopflipngTask(self.filename))
     self.tasks.extend([PngoutTask(f, self.filename) for f in args.filter])
     self.tasks.append(AdvpngTask(self.filename))
     self.tasks.append(OptipngTask(self.filename))
     self.tasks.extend([PngcrushTask(f, self.filename) for f in args.filter])
-    self.tasks.append(ZopflipngTask(self.filename))
     if args.run_tools:
       self.tasks = [t for t in self.tasks if t.name() in args.run_tools]
 
